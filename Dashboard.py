@@ -28,7 +28,7 @@ todos_anos = st.sidebar.checkbox('Dados de todo o período', value = True)
 if todos_anos:
     ano = ''
 else:
-    ano = st.sidebar.slider('Ano', 2020, 2023)
+    ano = st.sidebar.slider('Ano', 2020, 2023,(2020,2023))
 
 query_string = {'regiao':regiao.lower(), 'ano':ano}
 
