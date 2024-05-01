@@ -12,7 +12,7 @@ def formata_numero(valor,prefixo= ''):
         valor /=1000
     return f'{prefixo}{valor:.2f} milhões'
 
-st.title('DASHBOARD DE VENDAS :shopping_trolley:')
+st.title('DASHBOARD DE VENDAS ODONIO SHOP "🙅‍♂️" :shopping_trolley:')
 
 url = 'https://labdados.com/produtos'
 regioes = ['Brasil', 'Centro-Oeste', 'Nordeste', 'Norte', 'Sudeste', 'Sul']
