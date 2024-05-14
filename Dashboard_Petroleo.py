@@ -3,7 +3,6 @@ import pandas as pd
 import requests
 import plotly.express as px
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.metrics   import mean_absolute_error, mean_squared_error,mean_absolute_percentage_error,r2_score
 
 
