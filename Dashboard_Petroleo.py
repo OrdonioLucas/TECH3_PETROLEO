@@ -75,3 +75,22 @@ with coluna3:
 
 st.plotly_chart(fig_preco_petroleo,use_container_width=True)
 
+# Layout da aba "Análises"
+with aba2:
+    # Histograma dos Preços do Petróleo
+    fig_hist = px.histogram(df_filtrado, x='Price', nbins=10, title='Distribuição dos Preços do Petróleo')
+    st.plotly_chart(fig_hist, use_container_width=True)
+    
+    # Boxplot dos Preços do Petróleo
+    fig_box = px.box(df_filtrado, y='Price', title='Boxplot dos Preços do Petróleo')
+    st.plotly_chart(fig_box, use_container_width=True)
+    
+    # Gráfico de Barras dos Preços Médios por Ano
+    df_avg = df_filtrado.groupby('Year', as_index=False)['Price'].mean()
+    fig_bar = px.bar(df_avg, x='Year', y='Price', title='Preço Médio do Petróleo por Ano')
+    st.plotly_chart(fig_bar, use_container_width=True)
+
+# Layout da aba "Predição"
+with aba3:
+    st.write("Conteúdo de predição aqui")
+
