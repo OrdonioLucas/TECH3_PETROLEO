@@ -1,13 +1,12 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from sklearn.metrics       import mean_absolute_error, mean_squared_error,mean_absolute_percentage_error,r2_score
+from sklearn.metrics import mean_absolute_error, mean_squared_error, mean_absolute_percentage_error, r2_score
 from sklearn.preprocessing import MinMaxScaler
-from keras.preprocessing.sequence import TimeseriesGenerator
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import LSTM
-from datetime import 
+from tensorflow.keras.preprocessing.sequence import TimeseriesGenerator
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, LSTM
+from datetime import timedelta
 import plotly.express as px
 
 # funções auxiliares

@@ -67,7 +67,7 @@ max_formatada = f'U${maximo:,.2f}'
 
 fig_preco_petroleo = px.line(df_filtrado, x=df_filtrado.index, y='Price', title='Preço do Petróleo por Ano', line_shape='linear')
 
-aba1, aba2, aba3 = st.tabs(['Apresentação Geral','Análises', 'Predição'])
+aba1, aba2, aba3 = st.tabs(['Apresentação Geral','Análises dos Dados', 'Análise Macro'])
 
 with aba1:
     
