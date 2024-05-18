@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import base64
 
 
 
@@ -24,6 +25,7 @@ df['Year'] = df['Year'].astype(int)
 
 st.set_page_config(layout = 'wide')
 
+#Funcão para formatar número
 def formata_numero(valor,prefixo= ''):
     for unidade in ['','mil']:
         if valor <1000:
@@ -31,6 +33,11 @@ def formata_numero(valor,prefixo= ''):
         valor /=1000
     return f'{prefixo}{valor:.2f} milhões'
 
+# Função para converter imagem em base64
+def image_to_base64(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
+    
 st.title('TECH 4 - ANÁLISE E PROJEÇÃO DO PREÇO DO PETRÓLEO')
 
 st.sidebar.title('Filtros')
@@ -60,20 +67,46 @@ max_formatada = f'U${maximo:,.2f}'
 
 fig_preco_petroleo = px.line(df_filtrado, x=df_filtrado.index, y='Price', title='Preço do Petróleo por Ano', line_shape='linear')
 
-aba1, aba2, aba3 = st.tabs(['Preço Petróleo','Análises', 'Predição'])
+aba1, aba2, aba3 = st.tabs(['Apresentação Geral','Análises', 'Predição'])
 
-coluna1, coluna2, coluna3 = st.columns([1, 1, 1])
-
-with coluna1:
-    st.metric('Preço Médio do Petróleo U$$', media_formatada)
+with aba1:
     
-with coluna2:
-    st.metric('Preço Mínimo do Petróleo U$$', min_formatada)
+    # Texto introdutório
+    st.markdown("""
+    ### Análise de Variação do Petróleo
 
-with coluna3:
-    st.metric('Preço Máximo do Petróleo U$$', max_formatada)
+    Bem-vindo à análise de variação do preço do Petróleo do Grupo Tech 66, onde utilizamos a base do IPEA como fonte de dados para analisar a evolução do preço do Petróleo desde 1987. Nesta análise, iremos explorar os dados de forma geral, entendendo os motivos econômicos e de crise que levaram às grandes variações ao longo do tempo. Por último, forneceremos um modelo de machine learning capaz de prever os preços nos próximos 7 dias a partir do último dia disponibilizado na fonte de dados do site do IPEA.
 
-st.plotly_chart(fig_preco_petroleo,use_container_width=True)
+    """)
+    # Caminho da imagem
+    image_path = 'petroleo_img.jpg'
+
+    # Definindo a largura da imagem
+    image_width = 850
+
+    # HTML e CSS para centralizar a imagem
+    html_code = f"""
+        <div style="display: flex; justify-content: center;">
+            <img src="data:image/jpeg;base64,{image_to_base64(image_path)}" width="{image_width}">
+        </div>
+    """
+
+    # Renderiza o HTML no Streamlit
+    st.markdown(html_code, unsafe_allow_html=True)
+
+
+    coluna1, coluna2, coluna3 = st.columns([1, 1, 1])
+
+    with coluna1:
+        st.metric('Preço Médio do Petróleo U$$', media_formatada)
+        
+    with coluna2:
+        st.metric('Preço Mínimo do Petróleo U$$', min_formatada)
+
+    with coluna3:
+        st.metric('Preço Máximo do Petróleo U$$', max_formatada)
+
+    st.plotly_chart(fig_preco_petroleo,use_container_width=True)
 
 # Layout da aba "Análises"
 with aba2:
