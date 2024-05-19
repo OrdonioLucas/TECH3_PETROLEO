@@ -21,11 +21,12 @@ def ml_error( model_name, y, yhat ):
                            'RMSE': rmse }, index=[0] )
 
 #Load Data
-df = pd.read_html('http://www.ipeadata.gov.br/ExibeSerie.aspx?module=m&serid=1650971490&oper=view', skiprows=1, thousands='.', decimal=',')[0]
+#df = pd.read_html('http://www.ipeadata.gov.br/ExibeSerie.aspx?module=m&serid=1650971490&oper=view', skiprows=1, thousands='.', decimal=',')[0]
+df = pd.read_excel('data.xlsx')
 
 # Data Preparation
-df = df.rename(columns={0:'Date',1:'Price'})
-df['Date'] = df['Date'].str.replace('/', '-')
+#df = df.rename(columns={0:'Date',1:'Price'})
+#df['Date'] = df['Date'].str.replace('/', '-')
 df['Date'] = pd.to_datetime(df['Date'], format='%d-%m-%Y')
 # Definindo a coluna 'A' como o índice
 df = df.set_index('Date')
