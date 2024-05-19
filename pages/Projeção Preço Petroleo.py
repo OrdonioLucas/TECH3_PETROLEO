@@ -38,36 +38,34 @@ if not os.path.exists(model_path):
     model.add(LSTM(80, activation='relu', input_shape=(n_input, n_features)))
     model.add(Dense(1))
     model.compile(optimizer='adam', loss='mse')
+    model.summary()
+    # Treinando o modelo
     model.fit(generator, epochs=50)
     joblib.dump(model, model_path)
 else:
     model = joblib.load(model_path)
 
-# Predict
-last_train_batch = scaled_train[-n_input:]
-last_train_batch = last_train_batch.reshape((1, n_input, n_features))
-model.predict(last_train_batch)
-
+# Gerando previsões
 test_predictions = []
-
 first_eval_batch = scaled_train[-n_input:]
 current_batch = first_eval_batch.reshape((1, n_input, n_features))
 
-for i in range(7):
+for i in range(30):
     current_pred = model.predict(current_batch)[0]
     test_predictions.append(current_pred)
     current_batch = np.append(current_batch[:, 1:, :], [[current_pred]], axis=1)
 
+# Transformando os valores de volta à escala original
 true_predictions = scaler.inverse_transform(test_predictions)
 df_predict = pd.DataFrame(true_predictions)
 
 ultima_data = df.index.max()
-proximas_datas = [ultima_data + timedelta(days=i) for i in range(1, 8)]
+proximas_datas = [ultima_data + timedelta(days=i) for i in range(1, 31)]
 df_predict['data'] = proximas_datas
 
 df_predict = df_predict.rename(columns={0: 'Predict'})
 
-fig_predict = px.line(df_predict, x='data', y='Predict', title='Previsão de preço dos Próximos 7 dias', line_shape='linear')
+fig_predict = px.line(df_predict, x='data', y='Predict', title='Previsão de preço dos Próximos 30 dias', line_shape='linear')
 
 st.title('TECH 4 - ANÁLISE E PROJEÇÃO DO PREÇO DO PETRÓLEO')
 
