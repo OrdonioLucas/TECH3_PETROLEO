@@ -19,6 +19,7 @@ df = pd.read_excel('data.xlsx')
 df['Date'] = pd.to_datetime(df['Date'], format='%d-%m-%Y')
 df = df.set_index('Date')
 df = df.loc['2020-01-01':]
+df = df.sort_index()
 
 # Data Transformation
 scaler = MinMaxScaler()
@@ -26,7 +27,7 @@ scaler.fit(df)
 scaled_train = scaler.transform(df)
 
 # Define generator
-n_input = 10
+n_input = 8
 n_features = 1
 generator = TimeseriesGenerator(scaled_train, scaled_train, length=n_input, batch_size=1)
 
@@ -64,9 +65,15 @@ proximas_datas = [ultima_data + timedelta(days=i) for i in range(1, 31)]
 df_predict['data'] = proximas_datas
 
 df_predict = df_predict.rename(columns={0: 'Predict'})
+df_predict = df_predict.set_index('data')
+df_predict.rename(columns={'data': 'Date', 'Predict': 'Price'}, inplace=True)
+df['Type'] = 'Real'
+df_predict['Type'] = 'Predicted'
+df_combined = pd.concat([df, df_predict])
+df_combined = df_combined.loc['2024-01-01':]
 
-fig_predict = px.line(df_predict, x='data', y='Predict', title='Previsão de preço dos Próximos 30 dias', line_shape='linear')
-
+#fig_predict = px.line(df_predict, x='data', y='Predict', title='Previsão de preço dos Próximos 30 dias', line_shape='linear')
+fig = px.line(df_combined, x=df_combined.index, y='Price', color='Type', title='Real vs Predicted Prices')
 st.title('TECH 4 - ANÁLISE E PROJEÇÃO DO PREÇO DO PETRÓLEO')
 
-st.plotly_chart(fig_predict, use_container_width=True)
+st.plotly_chart(fig, use_container_width=True)
