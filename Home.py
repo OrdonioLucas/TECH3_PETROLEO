@@ -30,7 +30,7 @@ def carregar_dados():
     df = df.set_index('Date')
     return df
 
-
+@st.cache_data
 def carregar_dados_2():
     df2 = df
     # TRATAMENTO DOS DADOS
@@ -91,7 +91,7 @@ max_formatada = f'U${maximo:,.2f}'
 # Gráfico de Preço do Petróleo
 fig_preco_petroleo = px.line(df_filtrado, x=df_filtrado.index, y='Price', title='Preço do Petróleo por Ano', line_shape='linear')
 
-#Gráfico de preço petróleo espec
+#Gráfico de preço petróleo específico
 def plot_data(start_date, end_date):
     datas = df[(df['Year'] >= start_date) & (df['Year'] <= end_date)]
 
@@ -169,7 +169,7 @@ elif pagina == 'Análises dos Dados':
         st.write('')
         st.markdown('''
                     Os valores do [site do ipea](http://www.ipeadata.gov.br/ExibeSerie.aspx?module=m&serid=1650971490&oper=view) representam bem a situação atual do valor do preço do petróleo,
-                    demonstram uma proeminencia de valores incosntantes, mostrando a sua natureza volátil no mercado.
+                    demonstram uma proeminencia de valores inconstantes, mostrando a sua natureza volátil no mercado.
 
                     O valor na figura 1(preços médios, mínimos e máximos) demonstra a capacidade de aumentar abruptamente. Entretanto ao visualizarmos o gráfico boxplot e a distribuição de preços
                     abaixo é possível perceber que a maior parte dos dados está distribuída abaixo de 80 dólares
@@ -181,7 +181,7 @@ elif pagina == 'Análises dos Dados':
     df_avg = df_filtrado.groupby('Year', as_index=False)['Price'].mean()
     with st.container():
         st.markdown('''
-                    O foco não deve ser nadistribuição do valor, a base de dados começa em 1987, onde os valores eram consideravalemnte menores
+                    O foco não deve ser na distribuição do valor, a base de dados começa em 1987, onde os valores eram consideravalemnte menores
                     devido a uma gigantesca série de fatores(inflação, mudanças economicas) que não entraremos no assunto. 
                     
                     O ponto é, o valor tem crescido em média, sendo afetado por combinações de oferta, demandas, políticas internacionais e eventos inesperados como pandemias e guerras​.
@@ -292,6 +292,19 @@ elif pagina =='Predição':
     # Define model
     model_path = 'model.pkl'
 
+    progress_bar = st.sidebar.progress(0)
+    status_text = st.sidebar.empty()
+    last_rows = np.random.randn(1, 1)
+
+    for i in range(1, 101):
+        new_rows = last_rows[-1, :] + np.random.randn(5, 1).cumsum(axis=0)
+        status_text.text("%i%% Complete" % i)
+        progress_bar.progress(i)
+        last_rows = new_rows
+        time.sleep(0.05)
+
+    progress_bar.empty()
+
     if not os.path.exists(model_path):
         model = Sequential()
         model.add(LSTM(80, activation='relu', input_shape=(n_input, n_features)))
@@ -335,3 +348,11 @@ elif pagina =='Predição':
     st.title('TECH 4 - ANÁLISE E PROJEÇÃO DO PREÇO DO PETRÓLEO')
 
     st.plotly_chart(fig, use_container_width=True)
+    st.subheader('Considerações Finais:')
+    st.markdown('''
+                O setor energético como todo tem sofrido nos últimos anos, primeiramente pela pandemia e seguido pela invasão da Ucrânia, impactando consumidores e produtores de energia pela volatilidade nos preços.
+
+                Embora alguns indicadores reflitam que estamos retomando índices de consumo e preços pré-pandemia, não há indicadores suficientes para que a crise energética de 2020-2023 tenha passado. A guerra na Ucrânia, a instabilidade no Oriente Médio e os indicativos claros para a transição energética são sinais de que ainda estamos em um período instável.
+
+                Dado o período de instabilidade e a manutenção das políticas de corte de produção por parte dos membros da OPEP+, há uma tendência dos preços do barril de petróleo à subir e continuar nesse ritmo até que a demanda volte a descer (como visto constantemente no gráfico histórico de preços).
+                ''')
