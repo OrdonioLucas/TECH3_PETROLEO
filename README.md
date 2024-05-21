@@ -23,3 +23,7 @@ python -m venv venv
 pip install -r requirements.txt
 
 streamlit run Dashboard_Petroleo.py
+
+
+## Link do git:
+https://github.com/OrdonioLucas/TECH3_PETROLEO
