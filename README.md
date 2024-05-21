@@ -10,7 +10,8 @@ Por último, forneceremos um modelo de machine learning capaz de prever os preç
 - Francisco das Chagas Peres Júnior
 
 ## STREAMLIT
-PROJETO DASHBOARD COM STREAMLIT
+PROJETO ESTA DISPONÍVEL EM:
+- https://tech3petroleo-tye8p9hmnidx59gmjjexdr.streamlit.app/
 
 ## Para executar localmente rode estes comandos no terminal:
 rmdir venv
