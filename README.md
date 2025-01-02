@@ -1,17 +1,18 @@
-## Análise de Variação do Petróleo
+Oil Price Variation Analysis
+Welcome to Tech 66 Group's 🎉 Oil Price Variation Analysis, where we use the IPEA database as the primary data source to examine the evolution of oil prices since 1987.
+In this analysis, we will explore the data broadly, understanding the economic and crisis-related factors that have led to significant variations over time.
+Finally, we will provide a machine learning model capable of predicting oil prices for the next 7 days based on the latest data available from the IPEA website.
 
-Bem-vindo à análise de variação do preço do Petróleo do Grupo Tech 66 🎉, onde utilizamos a base do IPEA como fonte de dados para analisar a evolução do preço do Petróleo desde 1987.
-Nesta análise, iremos explorar os dados de forma geral, entendendo os motivos econômicos e de crise que levaram às grandes variações ao longo do tempo. 
-Por último, forneceremos um modelo de machine learning capaz de prever os preços nos próximos 7 dias a partir do último dia disponibilizado na fonte de dados do site do IPEA.
-                
-## Grupo 66 - Autores:
-- Flademir de Albuquerque
-- Lucas Ordonio
-- Francisco das Chagas Peres Júnior
+Group 66 - Authors:
+Flademir de Albuquerque
+Lucas Ordonio
+Francisco das Chagas Peres Júnior
+STREAMLIT
 
-## STREAMLIT
-PROJETO ESTA DISPONÍVEL EM:
-- https://tech3petroleo-tye8p9hmnidx59gmjjexdr.streamlit.app/
+PROJECT AVAILABLE AT:
+
+https://tech3petroleo-tye8p9hmnidx59gmjjexdr.streamlit.app/
+
 
 ## Para executar localmente rode estes comandos no terminal:
 rmdir venv
